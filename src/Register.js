@@ -1,6 +1,8 @@
 import React ,{Component} from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message} from 'antd';
 import "./Register.css"
+import $ from "jquery"
+import {API_ROOT} from "./util/constant";
 
 const FormItem = Form.Item;
 class RegistrationForm extends Component {
@@ -14,8 +16,21 @@ class RegistrationForm extends Component {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                $.ajax({
+                        url:`${API_ROOT}/signup`,
+                        method: 'POST',
+                        data: JSON.stringify({
+                            username: values.username,
+                            password: values.password,
+                        })
+                    }
+                ).then(
+                    (rsp) => {message.success(rsp);},
+                    (rsp) => {message.success(rsp.responseText);}
+                )
             }
-        });
+        })
+
     }
 
     handleConfirmBlur = (e) => {
@@ -72,7 +87,7 @@ class RegistrationForm extends Component {
                     {...formItemLayout}
                     label="Username"
                 >
-                    {getFieldDecorator('Username', {
+                    {getFieldDecorator('username', {
                         rules: [ {
                             required: true, message: 'Please input your Username!',
                         }],
