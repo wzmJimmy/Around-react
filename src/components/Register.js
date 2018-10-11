@@ -1,8 +1,9 @@
 import React ,{Component} from 'react';
 import { Form, Input, Button, message} from 'antd';
-import "./Register.css"
+import "../styles/Register.css"
 import $ from "jquery"
-import {API_ROOT} from "./util/constant";
+import {API_ROOT} from "../util/constant";
+import {Link} from 'react-router-dom';
 
 const FormItem = Form.Item;
 class RegistrationForm extends Component {
@@ -25,8 +26,11 @@ class RegistrationForm extends Component {
                         })
                     }
                 ).then(
-                    (rsp) => {message.success(rsp);},
-                    (rsp) => {message.success(rsp.responseText);}
+                    (rsp) => {
+                        message.success(rsp);
+                        this.props.history.push('/login');
+                        },
+                    (rsp) => {message.error(rsp.responseText);}
                 )
             }
         })
@@ -125,6 +129,7 @@ class RegistrationForm extends Component {
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">Register</Button>
+                    <p>I already have an account <Link to="/login">Login now!</Link></p>
                 </FormItem>
             </Form>
         );
