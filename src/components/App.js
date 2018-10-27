@@ -17,7 +17,6 @@ class App extends Component {
         this.setState({isLogin:false});
     }
   render() {
-        console.log(this.state.isLogin)
     return (
       <div className="App">
         <Header isLogin={this.state.isLogin} handle_logout={this.handel_logout}/>

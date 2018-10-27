@@ -43,24 +43,23 @@ export class Home extends Component{
         console.log(error);
         this.setState({loadingGeo: false, error:error.message});
     }
-    loadNearbyPosts = ()=>{
+    loadNearbyPosts = (loaction, range)=>{
         this.setState({loadingPost: false});
-        const {lat,long} = JSON.parse(localStorage.getItem(POS_KEY));
+        const {lat,long} = loaction || JSON.parse(localStorage.getItem(POS_KEY));
+        const radius = range||20;
         $.ajax({
-                url:`${API_ROOT}/search?lat=${lat}&lon=${long}&range=200`,
+                url:`${API_ROOT}/search?lat=${lat}&lon=${long}&range=${radius}`,
                 headers:{
                     Authorization:`${AUTH_PREFIX} ${localStorage.getItem(KEY)}`,
                 },
                 method: 'GET',
             }
         ).then(
-            (rsp) => {this.setState({loadingPost: false,post:rsp});
-            console.log(rsp)},
+            (rsp) => {this.setState({loadingPost: false,post:(rsp||[])});},
             (rsp) => {this.setState({error:rsp.responseText});}
         ).catch((err)=>{console.log(err)})
     }
     getGalleryPanelContent = () => {
-        console.log(this.state.loadingGeo);
         if (this.state.error) {
             return <div>{this.state.error}</div>;
         } else if (this.state.loadingGeo) {
@@ -85,6 +84,8 @@ export class Home extends Component{
                 <TabPane tab="Post" key="1">{this.getGalleryPanelContent()}</TabPane>
                 <TabPane tab="Map" key="2">
                     <AroundMap
+                        loadNearbyPosts={this.loadNearbyPosts}
+                        posts={this.state.post}
                         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3CEh9DXuyjozqptVB5LA-dN7MxWWkr9s&v=3.exp&libraries=geometry,drawing,places"
                         loadingElement={<div style={{ height: `100%` }} />}
                         containerElement={<div style={{ height: `600px` }} />}

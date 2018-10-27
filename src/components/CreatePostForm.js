@@ -25,7 +25,7 @@ class innerCreatePostForm extends Component{
         return(
             <Form layout="vertical"> 
                 <FormItem {...formItemLayout} label="Message"> 
-                    {getFieldDecorator('username', { 
+                    {getFieldDecorator('message', { 
                         rules: [{ required: true, message: 'Please input Message!' }], 
                     })(
                          <Input/>

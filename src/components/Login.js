@@ -22,7 +22,7 @@ class NormalLoginForm extends Component {
                         })
                     }
                 ).then(
-                    (rsp) => {this.props.handle_login(rsp); message.success(rsp);},
+                    (rsp) => {this.props.handle_login(rsp);}, //message.success(rsp);},
                     (rsp) => {message.error(rsp.responseText);}
                 )
             }

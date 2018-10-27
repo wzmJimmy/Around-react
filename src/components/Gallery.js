@@ -20,7 +20,7 @@ export class Gallery extends Component{
         var images = this.props.images.map((i) => {
                 i.customOverlay = (
                     <div style={captionStyle}>
-                        <div>{`${i.user}:{$i.caption}`}</div>
+                        <div>{`${i.user}:${i.caption}`}</div>
                     </div>);
                 return i;
             });

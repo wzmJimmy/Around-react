@@ -1,7 +1,7 @@
 import React ,{Component} from 'react';
 import {Button,Modal,message} from 'antd';
 import {CreatePostForm} from "./CreatePostForm";
-import {API_ROOT, AUTH_PREFIX, KEY, POS_KEY} from "../util/constant";
+import {API_ROOT, AUTH_PREFIX, KEY, POS_KEY,random} from "../util/constant";
 import $ from 'jquery';
 
 export class CreatePostButton extends Component{
@@ -21,8 +21,8 @@ export class CreatePostButton extends Component{
             if (!err) {
                 const {lat, long} = JSON.parse(localStorage.getItem(POS_KEY));
                 const formData = new FormData();
-                formData.set('lat', lat);
-                formData.set('lon', long);
+                formData.set('lat', lat + random());
+                formData.set('lon', long + random());
                 formData.set('message', values.message);
                 formData.set('image', values.Image[0].originFileObj);
 

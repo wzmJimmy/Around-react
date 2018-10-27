@@ -7,3 +7,4 @@ export const GEO_OPTIONS = {
 }
 export const POS_KEY = "POS_KEY";
 export const AUTH_PREFIX = 'Bearer';
+export function random(){return Math.random()*0.04-0.02;}
